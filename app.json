@@ -2,7 +2,7 @@
   "expo": {
     "name": "AQYLDY ÁLIPBI",
     "slug": "LatinProject",
-    "icon": "./assets/images/aqyldy.png",
+    "icon": "./assets/images/screen.png",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -13,9 +13,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/screen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#8c51d9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,7 +27,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.decode.encode"
+      "package": "com.aqyldy.latin"
     }
   }
 }

@@ -20,7 +20,7 @@ export default class Welcome extends Component {
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <View style={styles.container}>
                 <Text style={{color: 'white', fontWeight: 'bold', fontSize: 27, }}>AQYLDY</Text>
-                <Text  style={{color: 'white', fontWeight: 'bold',fontSize: 27, marginBottom: 30}}>ÁLIPBI</Text>
+                <Text  style={{color: 'white', fontWeight: 'bold',fontSize: 27, marginBottom: 30}}>ÁLİPBI</Text>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Ақтөбе облысының {'\n'} тілдерді дамыту басқармасы
                     </Text>

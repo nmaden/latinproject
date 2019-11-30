@@ -23,7 +23,8 @@ import { whileStatement } from '@babel/types';
         percent: [],
         timePassed: false,
         first: [],
-        second: []
+        second: [],
+        size: ''
     };
     
   }
@@ -52,9 +53,22 @@ import { whileStatement } from '@babel/types';
     
     const { navigation } = this.props;
     this.focusListener = navigation.addListener('didFocus', () => {
-      
-      // AsyncStorage.getItem('UID123', (err, result) => {
-      //   this.setState({ user_id:  JSON.parse(result).user_id }, () => {
+
+      fetch('http://latinapi.herokuapp.com/v2/insert_data/getsize', {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+   
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({ size: responseData.message }, () => {
+       
+         }); 
+
+      });
           fetch('http://latinapi.herokuapp.com/v2/insert_data/statisticslatin', {
             method: 'GET',
             headers: {
@@ -120,10 +134,16 @@ import { whileStatement } from '@babel/types';
       else {
       return (
        
-        <ScrollView style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',padding: 30}}>
-      
-      <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18}}>Ең көп жүктеген облыстар тізімі</Text>
+      <ScrollView style={styles.container}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',padding: 30}}>
+
+      <View style={{padding: 10, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center',}}>
+          <Text style={{fontSize: 16, fontWeight: "bold", color: 'white',textAlign:'center'}}>Қосымшаны жүктеген адам саны -  {this.state.size}</Text>
+      </View>
+
+      <View style={{marginTop: 20,padding: 20, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
+      <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18,textAlign:'center'}}>Ең көп жүктеген облыстар тізімі</Text>
+      </View>
       <PieChart
         data={this.state.object}
         width={Dimensions.get("window").width}
@@ -147,7 +167,10 @@ import { whileStatement } from '@babel/types';
         paddingLeft="15"
         absolute
       />
-      <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18}}>ТОП 5</Text>
+      
+      <View style={{padding: 10, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
+      <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18,textAlign:'center'}}>ТОП 5</Text>
+      </View>
         <LineChart
           data={{
             labels: this.state.namecountry,

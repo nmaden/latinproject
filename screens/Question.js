@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {KeyboardAvoidingView,TextInput, ScrollView, StyleSheet,View,TouchableOpacity,Text,Button,Image,FlatList,ActivityIndicator,Alert,Modal,AsyncStorage} from 'react-native';
 
+import { Audio } from 'expo-av';
 export default class Question extends Component {
 
   constructor(props) {
     super(props);
+    this.audioPlayer = new Audio.Sound();
     this.emailRef = React.createRef();
     this.state = {
       textInputs: [],
@@ -19,7 +21,8 @@ export default class Question extends Component {
       timePassed: false,
       user_id: '',
       objects: [],
-      _isMounted:false
+      _isMounted:false,
+      refresh: false
     };
     
   }
@@ -31,8 +34,18 @@ export default class Question extends Component {
     this.setState({borderColor: color});
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFocused !== this.props.isFocused) {
+       alert("changed");
+    }
+  }
 
   componentDidMount() {
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      
+
+    });
     this.setState({
       _isMounted: true
     });
@@ -67,6 +80,7 @@ export default class Question extends Component {
                 <FlatList
                     ref={this.emailRef}
                     data={this.props.navigation.getParam('data')}
+                    extraData={this.state}
                     renderItem={({item,index}) => 
                     <View>
                      
@@ -77,7 +91,13 @@ export default class Question extends Component {
                         <View   style={styles.view}>
                             <TextInput
                              selectTextOnFocus={true}
-                              style={styles.textInput}
+                              style={{  width: 300,
+                                padding: 20,
+                                marginBottom: 5,
+                                borderRadius: 10,
+                                borderColor: item.color,
+                                borderWidth: 2
+                                }}
                               onChangeText={
                                 text => {
                                   let { textInputs } = this.state;
@@ -105,26 +125,25 @@ export default class Question extends Component {
     }
   
   }
-
-  print(str,second) {
     
-
-    var ar1 =[];
-    var ar2 = [];
-    for (var i = 0; i < str.length; i++) {
-        ar1.push(str.charAt(i));
+  win = async () => {
+    try {
+      await this.audioPlayer.unloadAsync()
+      await this.audioPlayer.loadAsync(require('../assets/sound/win.mp3'));
+      await this.audioPlayer.playAsync();
+    } catch (err) {
+      console.warn("Couldn't Play audio", err)
     }
-    for (var i = 0; i < second.length; i++) {
-      ar2.push(second.charAt(i));
-    }
+  }
 
-    for (var i = 0; i < ar1.length; i++) {
-        if(ar1[i]===ar2[i]) {
-            console.log("THEY ARE EQUAL "+ar1[i]+"  "+ar2[i]);
-        }
-        else {
-          console.log("THEY ARE NOT EQUAL "+ar1[i]+"  "+ar2[i]);
-        }
+    
+  lose = async () => {
+    try {
+      await this.audioPlayer.unloadAsync()
+      await this.audioPlayer.loadAsync(require('../assets/sound/lose.mp3'));
+      await this.audioPlayer.playAsync();
+    } catch (err) {
+      console.warn("Couldn't Play audio", err)
     }
   }
   handleClick = () => {    
@@ -151,11 +170,14 @@ export default class Question extends Component {
 
           if(key.latin.toLowerCase().replace(/\s/g, '').localeCompare(this.state.textInputs[j].toLowerCase().replace(/\s/g, ''))==0) {
             trueanswer++; 
+            
+            key.color = "#8c51d9";
           }
           else {
+            key.color = "#e91e63";
             wronganswer++;
-           
-            this.print(key.latin.toLowerCase().replace(/\s/g, ''),this.state.textInputs[j].toLowerCase().replace(/\s/g, ''));
+            
+            // this.print(key.latin.toLowerCase().replace(/\s/g, ''),this.state.textInputs[j].toLowerCase().replace(/\s/g, ''));
 
             wrongwords = wrongwords+"\n"+key.kazakh+", ";
             wrongwordslatin = wrongwordslatin+"\n"+key.kazakh+", ";
@@ -166,10 +188,10 @@ export default class Question extends Component {
   
 
       if(trueanswer<=5) {
+        this.lose();
         Alert.alert(
-          ' Дұрыс жауап саны  '+trueanswer+"\n"+' Дұрыс емес жауап саны  '+wronganswer+"\n "+'Қате жазылған сөздер тiзiмi:',
-          ''+wrongwords,
-          
+          ' Дұрыс жауап саны  '+trueanswer,
+          ' Дұрыс емес жауап саны  '+wronganswer,
           [
           {text: 'Қайтадан сынау',  onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
           {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
@@ -179,9 +201,10 @@ export default class Question extends Component {
         )
       }
       else {
+        this.win();
         Alert.alert(
-          ' Дұрыс жауап саны  '+trueanswer+"\n"+' Дұрыс емес жауап саны  '+wronganswer+"\n "+'Қате жазылған сөздер тiзiмi:',
-          ''+wrongwordslatin,
+          ' Дұрыс жауап саны  '+trueanswer,
+          ' Дұрыс емес жауап саны  '+wronganswer,
           [
           {text: 'Келесi кезен', onPress: () =>this.props.navigation.navigate('Level',{color:'#31bc92'}), style: 'cancel'},
           {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
