@@ -137,11 +137,11 @@ import { whileStatement } from '@babel/types';
       <ScrollView style={styles.container}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',padding: 30}}>
 
-      <View style={{padding: 10, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center',}}>
+      <View style={{padding: 10, borderRadius: 25, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center',}}>
           <Text style={{fontSize: 16, fontWeight: "bold", color: 'white',textAlign:'center'}}>Қосымшаны жүктеген адам саны -  {this.state.size}</Text>
       </View>
 
-      <View style={{marginTop: 20,padding: 20, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
+      <View style={{marginTop: 20,padding: 20, borderRadius: 25, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
       <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18,textAlign:'center'}}>Ең көп жүктеген облыстар тізімі</Text>
       </View>
       <PieChart
@@ -168,7 +168,7 @@ import { whileStatement } from '@babel/types';
         absolute
       />
       
-      <View style={{padding: 10, borderRadius: 10, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
+      <View style={{padding: 10, borderRadius: 25, backgroundColor: '#8c51d9',display:'flex',flexDirection: 'row',justifyContent: 'center'}}>
       <Text style={{color: 'white',fontWeight: 'bold', fontSize: 18,textAlign:'center'}}>ТОП 5</Text>
       </View>
         <LineChart

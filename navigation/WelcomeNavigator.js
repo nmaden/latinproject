@@ -50,37 +50,13 @@ export default class SignPage extends Component {
                 }
             }
 
-            async getKey() {
-                try {
-                const value = await AsyncStorage.getItem('@MySuperStore:key');
-                this.setState({myKey: value});
-                } catch (error) {
-                console.log("Error retrieving data" + error);
-                }
-            }
-
-            async saveKey(value) {
-                try {
-                await AsyncStorage.setItem('@MySuperStore:user', value);
-                } catch (error) {
-                console.log("Error saving data" + error);
-                }
-            }
             
     componentDidMount () {
-        AsyncStorage.getItem('UID123', (err, result) => {
-            
-            this.setState({unique_id: JSON.parse(result).user_id})
-               
-        });
         setTimeout(() => this.setState({timePassed: true}), 4000)
     }
    
     render() {
-        // if(this.state.unique_id) {
-        //     return this.props.navigation.navigate('Home');
-        // }
-        // else {
+     
             return  this.state.timePassed ? (
                 <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <View style={styles.container}>
@@ -152,7 +128,7 @@ export default class SignPage extends Component {
                     this.props.navigation.navigate('Home',{id:responseData.unique_id });
                 }
                 else {
-                    alert("Бұл номер жүйеге тіркелмеген");
+                    alert("Бұл логин жүйеге тіркелмеген");
                 }
              
             }).catch((error) => {

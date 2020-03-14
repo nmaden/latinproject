@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AQYLDY ÁLIPBI",
+    "name": "AQYLDY ÁLİPBI",
     "slug": "LatinProject",
     "icon": "./assets/images/screen.png",
     "privacy": "public",
@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/screen.png",
@@ -27,7 +27,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.aqyldy.latin"
+      "package": "com.encode.encode",
+      "versionCode": 3
     }
   }
 }
